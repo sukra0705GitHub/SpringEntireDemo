@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="student" class="Implement.Student">
+        <!-- 驱动调用Student中的set方法，将容器中的mathBookId对应的实体对象作为参数传入该Set方法 -->
+        <property name="mathBook" ref="mathBookId"/>
+    </bean>
+    <bean id="mathBookId" class="Implement.MathBook"/>
+</beans>
