@@ -2,11 +2,16 @@ package Implement;
 
 import Interface.Book;
 import Interface.StudentIF;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Student implements StudentIF {
     private Book mathBook;
+
+    private EnglishBook englishBook;
 
     public Student(){}
 
@@ -21,6 +26,7 @@ public class Student implements StudentIF {
     @Override
     public void readBook() {
         this.mathBook.read();
+        this.englishBook.read();
     }
 
     @Override
@@ -53,5 +59,10 @@ public class Student implements StudentIF {
     @Override
     public void goToSchool(String doWhat) {
 
+    }
+
+    @Autowired
+    public void setEnglishBook(EnglishBook englishBook) {
+        this.englishBook = englishBook;
     }
 }

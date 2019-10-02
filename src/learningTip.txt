@@ -1,0 +1,34 @@
+依赖注入有 两种 构造器注入和设置注入
+依赖注入就是自动帮你在类里的 类型为类的属性 设置默认值（帮你new一个具体对象）。
+
+Spring 上下文
+1，XML 显示配置。
+在Beans标签里 添加bean
+
+2， 自动化装配
+利用@ComponentScan 和 @Component 配合实现Bean生成。
+@ComponentScan and @Component 都是用在类上
+@ComponentScan 默认扫描当前类所在包下的 所有@Component类进行自动生成Bean并装配到Spring上下文中。
+@ComponentScan 可以设置扫描的包。
+依赖注入 利用@Autowrite 和 @Bean
+@Bean 用在返回值是类的方法上
+@Autowrite 用在构造器上或者设置方法上
+
+3，Java类进行配置
+利用@configure声明
+配置类里 每一个需要注入Spring上下文的类只需要写一个return为该类对象的方法,
+然后给这个方法添加@Bean注解就行。
+这样每一个方法就代表一个Bean（该方法对应XML配置中的<Bean />功能）。
+默认Bean的ID为该方法名，也可以指定Bean ID，利用@Bean(name="xxxxxxx")。
+依赖注入 只需要 传入另一个Bean对应的方法就行（就是普通的Java调用方法）。
+比如构造器注入依赖 假如Student类中依赖Book类，并且Student已经有一个形参为Book类型的参数的构造器，里面对Book属性进行设置。
+@Bean(name="customBean")
+public Student student(){
+    return new Student(book());//调用下面的book（）方法进行依赖注入。
+}
+@Bean
+public Book book(){
+    return new Book();
+}
+
+
