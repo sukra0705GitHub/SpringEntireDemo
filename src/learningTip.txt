@@ -8,11 +8,16 @@ Spring 上下文
 2， 自动化装配
 利用@ComponentScan 和 @Component 配合实现Bean生成。
 @ComponentScan and @Component 都是用在类上
+@ComponentScan一定要在XML配置文件里设置启用
+<context:component-scan base-package="Implement"/> 至关重要
+
 @ComponentScan 默认扫描当前类所在包下的 所有@Component类进行自动生成Bean并装配到Spring上下文中。
 @ComponentScan 可以设置扫描的包。
-依赖注入 利用@Autowrite 和 @Bean
+依赖注入 利用@Autowired 和 @Bean
+有待继续验证。。。。使用@Autowired自动依赖注入的对应的属性类一定要有对应get方法。。。。。。。。。。。。
 @Bean 用在返回值是类的方法上
-@Autowrite 用在构造器上或者设置方法上
+@Autowired 用在构造器上或者设值方法上
+
 
 3，Java类进行配置
 利用@configure声明
@@ -30,5 +35,23 @@ public Student student(){
 public Book book(){
     return new Book();
 }
+
+4， Java Config 可以合并 利用@import
+    Java Config 也可以导入XML配置 利用 @importResource
+例如
+@configure
+@import({customeConfig.class, xxxx.class, ...})  //导入其他JavaConfig
+@importResource("classpath:applicationContext.xml") //导入XML Bean配置
+public class springBeanConfig{
+    ............
+}
+
+5 XML配置中导入 JavaConfig配置 和 其他XML 配置
+例如
+<bean class="Implement.CustomSpringJavaConfig" /> //导入JavaConfig
+<import resource="otherApplicationContext.xml" /> //导入XML配置
+
+
+
 
 

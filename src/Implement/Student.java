@@ -19,8 +19,22 @@ public class Student implements StudentIF {
         this.mathBook = mathBook;
     }
 
+    /*public Book getMathBook() {
+        return mathBook;
+    }
+
+    public EnglishBook getEnglishBook() {
+        return englishBook;
+    }*/
+
+    @Autowired
     public void setMathBook(Book mathBook) {
         this.mathBook = mathBook;
+    }
+
+    @Autowired
+    public void setEnglishBook(EnglishBook englishBook) {
+        this.englishBook = englishBook;
     }
 
     @Override
@@ -59,10 +73,5 @@ public class Student implements StudentIF {
     @Override
     public void goToSchool(String doWhat) {
 
-    }
-
-    @Autowired
-    public void setEnglishBook(EnglishBook englishBook) {
-        this.englishBook = englishBook;
     }
 }

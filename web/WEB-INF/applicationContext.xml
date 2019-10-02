@@ -2,12 +2,34 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd">
-    <bean id="student" class="Implement.Student">
-        <!-- 驱动调用Student中的set方法，将容器中的mathBookId对应的实体对象作为参数传入该Set方法 -->
-        <property name="mathBook" ref="mathBookId"/>
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+    <!-- 国际化支持，固定写法，Spring提供的指定的Bean
+        这里设值之后还需要配置国际化资源文件
+    -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <!-- Spring调用messageSource对应的实体类对象的setBaseName()方法
+         参数为一个数组，这里可以使用list属性配置该数组
+         -->
+        <property name="basenames">
+            <list>
+                <value>"message"</value>
+                <!-- 如果有多个资源文件，可以都列在这里 -->
+            </list>
+        </property>
     </bean>
-    <bean id="mathBookId" class="Implement.MathBook"/>
+
+
+    <bean id="student" class="Implement.Student" lazy-init="true">
+        <!-- 通过设置方法设值 需要一个空构造器-->
+        <!-- 驱动Spring调用Student中的set方法，参数为ref指定的实体类对象 -->
+        <!--<property name="mathBook" ref="mathBookId"/>-->
+
+        <!-- 通过构造器设值 需要一个有一个形参为mathBook的构造器-->
+        <!-- 驱动Spring调用具有一个参数的构造器，参数为ref指定的实体类对象 -->
+        <constructor-arg ref="mathBookId"/>
+    </bean>
+    <bean id="mathBookId" class="Implement.MathBook" lazy-init="true"/>
+    <bean id="applicationHolder" class="Utils.ApplicationContextHolder"/>
+    <bean id="demoApplicationListener" class="Implement.DemoApplicationListener"/>
 </beans>

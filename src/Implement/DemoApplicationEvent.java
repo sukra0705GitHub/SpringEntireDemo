@@ -1,6 +1,7 @@
 package Implement;
 
 import org.springframework.context.ApplicationEvent;
+import org.springframework.stereotype.Component;
 
 public class DemoApplicationEvent extends ApplicationEvent {
     private String name;
