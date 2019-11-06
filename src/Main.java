@@ -1,6 +1,8 @@
 import Implement.DemoApplicationEvent;
 import Implement.Student;
 import Interface.StudentIF;
+import freemarker.cache.TemplateLoader;
+import freemarker.template.TemplateHashModel;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

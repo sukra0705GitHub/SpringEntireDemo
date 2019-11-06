@@ -1,8 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.3.xsd
+       http://www.springframework.org/schema/cache
+       http://www.springframework.org/schema/cache/spring-cache.xsd
+       http://www.springframework.org/schema/mvc
+       https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <context:component-scan base-package="Implement,Utils,Controller"/>
+
+    <!-- Enable Spring MVC -->
+    <!-- 1.11.4. Validation: By default, if Bean Validation is present on the classpath (for example, Hibernate Validator), the LocalValidatorFactoryBean is registered as a global Validator for use with @Valid and Validated on controller method arguments. -->
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
+        <!--
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper" ref="objectMapper"/>
+            </bean>
+            <bean class="org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter">
+                <property name="objectMapper" ref="xmlMapper"/>
+            </bean>
+        </mvc:message-converters>
+        -->
+    </mvc:annotation-driven>
+<!--
+    <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean"
+          p:indentOutput="true" p:simpleDateFormat="yyyy-MM-dd" p:modulesToInstall="com.fasterxml.jackson.module.paramnames.ParameterNamesModule"/>
+    <bean id="xmlMapper" parent="objectMapper" p:createXmlMapper="true"/>
+-->
+
+    <mvc:view-resolvers>
+        <!--
+        <mvc:content-negotiation>
+            <mvc:default-views>
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+            </mvc:default-views>
+        </mvc:content-negotiation>
+        -->
+        <mvc:freemarker cache-views="false"/>
+    </mvc:view-resolvers>
+
+    <!-- Configure FreeMarker... -->
+    <mvc:freemarker-configurer>
+        <mvc:template-loader-path location="/WEB-INF/freemarker"/>
+    </mvc:freemarker-configurer>
+    <!--
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="xml_escape" value-ref="fmXmlEscape"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>
+-->
+
+    <!-- Configure Resources -->
+    <mvc:resources mapping="/resources/**" location="/WEB-INF/public/">
+        <mvc:resource-chain resource-cache="true">
+            <mvc:resolvers>
+                <mvc:version-resolver>
+                    <mvc:content-version-strategy patterns="/**"/>
+                </mvc:version-resolver>
+            </mvc:resolvers>
+        </mvc:resource-chain>
+    </mvc:resources>
+
+    <!-- 1.11.11. Default Servlet -->
+    <mvc:default-servlet-handler/>
+    
+    <!-- 1.11.6. Content Types: You can configure how Spring MVC determines the requested media types from the request (for example, Accept header, URL path extension, query parameter, and others).-->
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="mediaTypes">
+            <value>
+                json=application/json
+                xml=application/xml
+            </value>
+        </property>
+    </bean>
+
+    <!-- 1.11.5. Interceptors: you can register interceptors to apply to incoming requests-->
+    <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/admin/**"/>
+            <bean class="org.springframework.web.servlet.theme.ThemeChangeInterceptor"/>
+        </mvc:interceptor>
+        <!--
+        <mvc:interceptor>
+            <mvc:mapping path="/secure/*"/>
+            <bean class="org.example.SecurityInterceptor"/>
+        </mvc:interceptor>
+        -->
+    </mvc:interceptors>
+
+    <!-- 1.11.3. Type Conversion https://docs.spring.io/spring/docs/5.2.0.RELEASE/spring-framework-reference/web.html#mvc-config-enable -->
+    <!--
+    <bean id="conversionService"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="org.example.MyConverter"/>
+            </set>
+        </property>
+        <property name="formatters">
+            <set>
+                <bean class="org.example.MyFormatter"/>
+                <bean class="org.example.MyAnnotationFormatterFactory"/>
+            </set>
+        </property>
+        <property name="formatterRegistrars">
+            <set>
+                <bean class="org.example.MyFormatterRegistrar"/>
+            </set>
+        </property>
+    </bean>
+    -->
 
     <!-- 国际化支持，固定写法，Spring提供的指定的Bean
         这里设值之后还需要配置国际化资源文件
