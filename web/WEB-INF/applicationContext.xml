@@ -30,11 +30,11 @@
         </mvc:message-converters>
         -->
     </mvc:annotation-driven>
-<!--
-    <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean"
-          p:indentOutput="true" p:simpleDateFormat="yyyy-MM-dd" p:modulesToInstall="com.fasterxml.jackson.module.paramnames.ParameterNamesModule"/>
-    <bean id="xmlMapper" parent="objectMapper" p:createXmlMapper="true"/>
--->
+    <!--
+        <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean"
+              p:indentOutput="true" p:simpleDateFormat="yyyy-MM-dd" p:modulesToInstall="com.fasterxml.jackson.module.paramnames.ParameterNamesModule"/>
+        <bean id="xmlMapper" parent="objectMapper" p:createXmlMapper="true"/>
+    -->
 
     <mvc:view-resolvers>
         <!--
@@ -76,7 +76,7 @@
 
     <!-- 1.11.11. Default Servlet -->
     <mvc:default-servlet-handler/>
-    
+
     <!-- 1.11.6. Content Types: You can configure how Spring MVC determines the requested media types from the request (for example, Accept header, URL path extension, query parameter, and others).-->
     <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
         <property name="mediaTypes">

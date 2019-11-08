@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Student implements StudentIF {
+    private String name;
+
     private Book mathBook;
 
     private EnglishBook englishBook;
@@ -17,6 +19,14 @@ public class Student implements StudentIF {
 
     public Student(Book mathBook) {
         this.mathBook = mathBook;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     /*public Book getMathBook() {

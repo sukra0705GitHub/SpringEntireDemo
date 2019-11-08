@@ -3,12 +3,12 @@
 <#import "/spring.ftl" as spring/>
 <html>
 <head>
-    <title>$Title$</title>
+    <title>${student.name}</title>
 </head>
 <body>
     <form action="" method="POST">
         Name:
-        <@spring.bind "personForm.name"/>
+        <@spring.bind "student.name"/>
         <input type="text"
                name="${spring.status.expression}"
                value="${spring.status.value?html}"/><br />
