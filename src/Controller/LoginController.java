@@ -64,7 +64,28 @@ public class LoginController {
     public String index(ModelMap mm, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
         System.out.println("Triggle Index!");
         System.out.println("RequestMethod:" + httpServletRequest.getMethod());
+        //Response setting
         httpServletResponse.setStatus(200);
+        httpServletResponse.setHeader("Content-Type", "text/html;charset=urf-8");
+        httpServletResponse.setHeader("Access-Control-Allow-origin", "http://172.31.162.193:8080/");
+        httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET, POST");
+
+        //Test request parameter
+        System.out.println("URI:" + httpServletRequest.getRequestURI());
+        System.out.println("PathInfo:" + httpServletRequest.getPathInfo());
+        System.out.println("ContextPath:" + httpServletRequest.getContextPath());
+        System.out.println("RealPath:" + httpServletRequest.getServletContext().getRealPath(httpServletRequest.getRequestURI()).trim());
+
+        /*String requestPathName;
+        String basePath = "C:/JetBrains/ideaProjectsLocation/HelloJava";
+        String requestPath = httpExchange.getRequestURI().getPath();
+        String host = httpExchange.getRequestURI().getHost();
+        System.out.println("host: "+ host + "__path: " + requestPath);
+        if (requestPath.matches("/.+")){
+            requestPathName = basePath + requestPath;
+        } else {
+            requestPathName = "C:\\JetBrains\\ideaProjectsLocation\\HelloJava\\WebPage\\index.html";
+        }*/
 
         Map<String, String> personMap = new HashMap<>();
         personMap.put("name", "sukra");
