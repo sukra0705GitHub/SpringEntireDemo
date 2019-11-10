@@ -16,7 +16,7 @@
     <script type="text/javascript" src="/SpringEntireFeaturesDemo_war_exploded/resources/js/common.js"></script>
 </head>
 
-<body class="text-center">
+<body class="text-center" background="/SpringEntireFeaturesDemo_war_exploded/resources/img/sample.jpg">
 <form class="form-signin">
     <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Please Enter Data</h1>
@@ -33,19 +33,19 @@
     <p class="mt-5 mb-3 text-muted">© 2017-2020</p>
 
     <button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-        Popover on 左侧
+        Popover on Left
     </button>
 
     <button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-        Popover on 顶部
+        Popover on Top
     </button>
 
     <button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-        Popover on 底部
+        Popover on Bottom
     </button>
 
     <button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-        Popover on 右侧
+        Popover on Right
     </button>
 
     <ul class="nav navbar-nav navbar-right">

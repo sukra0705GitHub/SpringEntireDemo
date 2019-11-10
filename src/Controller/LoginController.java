@@ -2,6 +2,9 @@ package Controller;
 
 import Implement.Student;
 import Interface.StudentIF;
+import Utils.FileManager;
+import Utils.FinalConst;
+import com.sun.net.httpserver.Headers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -19,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -123,4 +128,80 @@ public class LoginController {
         System.out.println("UserId:" + userId + "_UserName:" + username);
         return "Login";
     }
+
+    @GetMapping("/download")
+    public void downLoad(@RequestParam("fileName") String fileName, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
+        //Example For DownLoad TxT file
+        FileManager fileManager = new FileManager();
+        File file = fileManager.createFile(fileName);
+        fileManager.writeInfoToFile("Hello Requester! File info! Success!", file);
+
+        //Example For DownLoad PDF file
+            /*responseHeader.add("Content-Disposition","attachment;filename=downLoad.txt");//inline
+            responseHeader.add("Content-Type", "application/pdf");
+            File file = new File("C:\\JetBrains\\ideaProjectsLocation\\HelloJava\\test.pdf");*/
+
+        FileInputStream fileInputStream = new FileInputStream(file);
+        byte[] fileByte = new byte[fileInputStream.available()];
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+        bufferedInputStream.read(fileByte,0 ,fileInputStream.available());
+
+        httpServletResponse.addHeader("Content-Disposition","attachment;filename=downLoad.txt");
+        httpServletResponse.addHeader("Content-Type", "text/plain");
+        httpServletResponse.setStatus(HttpURLConnection.HTTP_OK);
+        httpServletResponse.setContentLength(fileInputStream.available());
+
+        OutputStream responseBody = httpServletResponse.getOutputStream();
+        responseBody.write(fileByte, 0, fileByte.length);
+        if (responseBody != null){
+            responseBody.close();
+        }
+    }
+
+    @GetMapping("/downloading")
+    public void downLoadFile(@RequestParam("fileName") String fileName, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
+        //Example For DownLoad TxT file
+        httpServletResponse.addHeader("Content-Disposition","attachment;filename=excel.xls");
+        httpServletResponse.addHeader("Content-Type", "application/vnd.ms-excel");
+        //File file = new File("C:\\JetBrains\\ideaProjectsLocation\\HelloJava\\excel.xml");
+        //File file = new File("C:\\JetBrains\\ideaProjectsLocation\\HelloJava\\src\\excelTest.xml");
+
+            /*commonUtil.FileManager fileManage = new commonUtil.FileManager();
+            File file = fileManage.createFile("downLoad.txt");
+            fileManage.writeInfoToFile("Hello function service! File info! Success!", file);*/
+
+        //Example For DownLoad PDF file
+            /*responseHeader.add("Content-Disposition","attachment;filename=downLoad.txt");//inline
+            responseHeader.add("Content-Type", "application/pdf");
+            File file = new File("C:\\JetBrains\\ideaProjectsLocation\\HelloJava\\test.pdf");*/
+
+            /*FileInputStream fileInputStream = new FileInputStream(file);
+            byte[] fileByte = new byte[fileInputStream.available()];
+            fileInputStream.read(fileByte);*/
+
+            /*BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+            bufferedInputStream.read(fileByte,0 ,fileInputStream.available());*/
+        //httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, fileInputStream.available());
+        String testString = FinalConst.excelString;
+        httpServletResponse.setStatus(HttpURLConnection.HTTP_OK);
+        httpServletResponse.setContentLength(testString.getBytes().length);
+
+        OutputStream responseBody = httpServletResponse.getOutputStream();
+        DataOutputStream dataInputStream = new DataOutputStream(responseBody);
+        dataInputStream.write(testString.getBytes());
+        if (dataInputStream != null){
+            dataInputStream.close();
+        }
+
+        //outputStreamWriter can't write info to download file, the down load file content is empty.
+            /*OutputStreamWriter outputStreamWriter = new OutputStreamWriter(responseBody);
+            outputStreamWriter.write(new String(fileByte));*/
+
+        //responseBody.write(fileByte, 0, fileByte.length);
+        //responseBody.write(fileByte);
+            /*if (responseBody != null){
+                responseBody.close();
+            }*/
+    }
+
 }
