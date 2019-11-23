@@ -17,6 +17,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
@@ -79,6 +80,8 @@ public class LoginController {
         System.out.println("URI:" + httpServletRequest.getRequestURI());
         System.out.println("PathInfo:" + httpServletRequest.getPathInfo());
         System.out.println("ContextPath:" + httpServletRequest.getContextPath());
+        System.out.println("Servlet-ContextPath:" + httpServletRequest.getServletContext().getContextPath());
+        System.out.println("ServletPath:" + httpServletRequest.getServletPath());
         System.out.println("RealPath:" + httpServletRequest.getServletContext().getRealPath(httpServletRequest.getRequestURI()).trim());
 
         /*String requestPathName;
