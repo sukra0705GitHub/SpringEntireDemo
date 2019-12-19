@@ -1,3 +1,4 @@
+/*
 package JavaCodeConfigureSample;
 
 import SpringConfigFile.SpringConfigByJavaCode;
@@ -26,7 +27,8 @@ public class MyWebApplicationInitializer implements WebApplicationInitializer {
         registration.addMapping("/sukraApp/*");
     }
 
-    /*@Override
+    */
+/*@Override
     public void onStartup(ServletContext container) {
         // Load Spring web application XML configuration
         XmlWebApplicationContext appContext = new XmlWebApplicationContext();
@@ -37,5 +39,7 @@ public class MyWebApplicationInitializer implements WebApplicationInitializer {
         ServletRegistration.Dynamic registration = container.addServlet("dispatcher", dispatcherServlet);
         registration.setLoadOnStartup(1);
         registration.addMapping("/");
-    }*/
+    }*//*
+
 }
+*/

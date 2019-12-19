@@ -1,3 +1,4 @@
+/*
 package JavaCodeConfigureSample;
 
 
@@ -19,3 +20,4 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
         return new String[] {"/sukraApp/*"};
     }
 }
+*/

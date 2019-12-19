@@ -51,6 +51,16 @@ public class springBeanConfig{
 <bean class="Implement.CustomSpringJavaConfig" /> //导入JavaConfig
 <import resource="otherApplicationContext.xml" /> //导入XML配置
 
+6,使用Spring事务声明@Transactional须添加aspectjweaver-1.8.7.jar包
+@Transactional(readOnly = true)
+read-only应用场合：
+          如果你一次执行单条查询语句，则没有必要启用事务支持，数据库默认支持SQL执行期间的读一致性；
+          如果你一次执行多条查询语句，例如统计查询，报表查询，在这种场景下，多条查询SQL必须保证整体的读一致性，否则，在前条SQL查询之后，后条SQL查询之前，数据被            其他用户改变，则该次整体的统计查询将会出现读数据不一致的状态，此时，应该启用事务支持。
+        【注意是一次执行多次查询来统计某些信息，这时为了保证数据整体的一致性，要用只读事务】
+
+使用@Transactional 引起如下异常
+javax.persistence.TransactionRequiredException: no transaction is in progress 通常是因为代码中不适当Flush()引起的。
+
 
 
 

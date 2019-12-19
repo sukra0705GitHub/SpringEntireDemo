@@ -1,10 +1,15 @@
 package Controller;
 
+import Entity.Person;
 import Implement.Student;
 import Interface.StudentIF;
 import Utils.FileManager;
 import Utils.FinalConst;
 import com.sun.net.httpserver.Headers;
+import org.hibernate.FlushMode;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -13,6 +18,7 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +38,40 @@ import java.util.Map;
 @Controller
 @RequestMapping("/")
 public class LoginController {
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public Session getCurrentSession(){
+        return this.sessionFactory.openSession();
+    }
     //@Autowired
     //HttpServletRequest httpServletRequest;
+
+    @Transactional(readOnly = true)
+    @GetMapping("/savePerson")
+    @ResponseBody
+    public String savePerson(){
+        Session session = getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        Person person = new Person();
+        person.setUsername("Sukra");
+        person.setAddress("shanghai");
+        person.setRemark("hello save person!");
+        //session.persist(person);
+        session.save(person);
+        //session.flush();
+        transaction.commit();
+
+        return "successSavePerson";
+    }
 
     @GetMapping("/mvindex")
     public ModelAndView index(ModelAndView mv){
@@ -124,12 +162,31 @@ public class LoginController {
         return "index";
     }
 
+    /**
+     * Response login page
+     * @param username
+     * @return
+     */
+    @GetMapping("/login")
+    public String login(@RequestParam("username") String username){
+        System.out.println("Triggle Login controller!");
+        System.out.println("UserName:" + username);
+        return "Login";
+    }
+
+    /**
+     * Response "Login" String to page.
+     * @param userId
+     * @param username
+     * @return
+     */
     @GetMapping("/login/{userId}")
     @ResponseBody
-    public String login(@PathVariable String userId, @RequestParam("username") String username){
+    public String login2(@PathVariable String userId, @RequestParam("username") String username){
         System.out.println("Triggle Login controller!");
         System.out.println("UserId:" + userId + "_UserName:" + username);
-        return "Login";
+        String responseBody = "UserId:" + userId + "_UserName:" + username;
+        return responseBody;
     }
 
     @GetMapping("/download")

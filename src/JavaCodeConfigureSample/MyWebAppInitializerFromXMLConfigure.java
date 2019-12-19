@@ -1,3 +1,4 @@
+/*
 package JavaCodeConfigureSample;
 
 
@@ -34,3 +35,4 @@ public class MyWebAppInitializerFromXMLConfigure extends AbstractDispatcherServl
         };
     }
 }
+*/

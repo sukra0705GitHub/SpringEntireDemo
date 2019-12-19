@@ -4,6 +4,7 @@ import Interface.StudentIF;
 import Utils.ApplicationContextHolder;
 import freemarker.cache.TemplateLoader;
 import freemarker.template.TemplateHashModel;
+import org.hibernate.dialect.MySQL8Dialect;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
@@ -29,6 +30,5 @@ public class Main {
         applicationContext.publishEvent(demoApplicationEvent);
         //Process to page 550
         //RequestContextUtils.findWebApplicationContext(null);
-        
     }
 }
